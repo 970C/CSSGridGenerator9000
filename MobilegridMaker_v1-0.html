@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>gridMaker_v0_1a</title>
+		<meta name="description" content="" />
+		<meta name="author" content="Jonathan Hammond" />
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		
+		<link rel="stylesheet" href="css/thestyle.css">
+		<style type="text/css">
+			html {
+				color:#222222;
+			}
+			.main {
+				min-height:1000px;
+			}
+		</style>
+		<script type="text/javascript">
+			function getResults(form) {
+				var getVar = form.inputbox.value;
+				return getVar;
+			}
+			function getResultsGutter(form) {
+				var getVar = form.inputbox2.value;
+				return getVar;
+			}
+			function getResultsContainer(form) {
+				var getVar = form.inputbox3.value;
+				return getVar;
+			}
+			function validate(form) {
+				var getVar = form.inputbox.value;
+
+			}
+			function validateGutter(form) {
+				var getVar = form.inputbox2.value;
+
+			}
+			function validateContainer(form) {
+				var getVar = form.inputbox3.value;
+
+			}
+
+			var numOfCol = 1;
+			var gutterSize = 16;
+			var docSize = 480;
+		</script>
+		<script type="text/javascript">
+						function putOut() {
+							
+							
+							function isWhole(num1) {
+								return num1 % 1;
+							}
+
+							function makeWhole(gutterSize, docWidth, numOfCol) {
+								var numOfGutter = numOfCol - 1;
+								colWidth = (docWidth - (gutterSize * numOfGutter)) / numOfCol;
+
+								while(isWhole(colWidth) != 0) {
+									docWidth -= 1;
+									colWidth = (docWidth - (gutterSize * numOfGutter)) / numOfCol;
+									isWholeNumber = (docWidth - (gutterSize * numOfGutter)) % numOfCol;
+								};
+								return docWidth;
+							}
+
+							docSize = makeWhole(gutterSize, docSize, numOfCol)
+							function convertToPixel(gutterSize, docWidth, numOfCol) {
+								var numOfGutter = numOfCol - 1;
+								colWidth = (docWidth - (gutterSize * numOfGutter)) / numOfCol;
+
+								return colWidth;
+							};
+
+							function convertToEm(width) {
+								return width / 16;
+							};
+							function convertToPercent(width, docWidth) {
+								return width / docWidth * 100;
+							};
+							gutterPercent = gutterSize / docSize * 100;
+							
+							function makeCssPixelGrid(mySize, myCols, myGutter, pixelsWidth, pixelsGutter) {
+								document.getElementById('mycode').innerHTML+=('<br /><br /><h2>your css: </h2>')
+								for(i = 1; i <= myCols; i++){
+									colWidth = (mySize * i) + (myGutter * (i - 1));
+									if (i<myCols){
+									document.getElementById('mycode').innerHTML+=('.col_percent' + i + '&#123;width&#58; ' + colWidth + '&#37;&#59;&#125;<br />');
+									}else
+									document.getElementById('mycode').innerHTML+=('.col_percent' + i + '&#123;width&#58; ' + colWidth + '&#37;&#59; max-width: '+ docSize + 'px &#59;&#125;<br />');
+								};
+								for(i = 1; i <= myCols; i++){
+									colWidth = (mySize * i) + (myGutter * (i - 1));
+									rowHeight = (pixelsWidth * i) + (pixelsGutter * (i - 1));
+									document.getElementById('mycode').innerHTML+=('.leftmargin_percent' + i + '&#123;margin-left&#58; ' + colWidth + '&#37;&#59;&#125;<br />');
+									document.getElementById('mycode').innerHTML+=('.rightmargin_percent' + i + '&#123;margin-right&#58; ' + colWidth + '&#37;&#59;&#125;<br />');
+									document.getElementById('mycode').innerHTML+=('.topmargin_pixel' + i + '&#123;margin-top&#58; ' + rowHeight + 'px&#59;&#125;<br />');
+									document.getElementById('mycode').innerHTML+=('.bottommargin_pixel' + i + '&#123;margin-bottom&#58; ' + rowHeight + 'px&#59;&#125;<br />');
+								};
+								for(i = 1; i <= (myCols ); i++){
+									colWidth = (pixelsWidth * i) + (pixelsGutter * (i - 1));
+									document.getElementById('mycode').innerHTML+=('.row_height' + i + '&#123;height&#58; ' + colWidth + 'px&#59;&#125;<br />');
+								};
+								for(i = 1; i <= myCols; i++){
+									colWidthNoGutter = (mySize * i) + (myGutter * (i));
+									if (i<myCols){
+									document.getElementById('mycode').innerHTML+=('.col_nogutter_percent' + i + '&#123;width&#58; ' + colWidthNoGutter + '&#37;&#59;&#125;<br />');
+									}
+								};
+								for(i = 1; i <= myCols; i++){
+									colWidthNoGutter = (mySize * i) + (myGutter * (i));
+									rowHeightNoGutter = (pixelsWidth * i) + (pixelsGutter * (i ));
+									if (i<myCols){
+									document.getElementById('mycode').innerHTML+=('.leftmargin_nogutter_percent' + i + '&#123;margin-left&#58; ' + colWidthNoGutter + '&#37;&#59;&#125;<br />');
+									document.getElementById('mycode').innerHTML+=('.rightmargin_nogutter_percent' + i + '&#123;margin-right&#58; ' + colWidthNoGutter + '&#37;&#59;&#125;<br />');
+									document.getElementById('mycode').innerHTML+=('.topmargin_nogutter_pixel' + i + '&#123;margin-top&#58; ' + rowHeightNoGutter + 'px&#59;&#125;<br />');
+									document.getElementById('mycode').innerHTML+=('.bottommargin_nogutter_pixel' + i + '&#123;margin-bottom&#58; ' + rowHeightNoGutter + 'px&#59;&#125;<br />');
+									}
+								};
+								for(i = 1; i <= (myCols ); i++){
+									colWidth = (pixelsWidth * i) + (pixelsGutter * (i));
+									document.getElementById('mycode').innerHTML+=('.row_nogutter_height' + i + '&#123;height&#58; ' + colWidth + 'px&#59;&#125;<br />');
+								};
+								return;
+							};
+							
+							comment = ('<p>container width is:' + docSize + 'px</p><p>column width is:' + convertToPixel(gutterSize, docSize, numOfCol) + 'px</p><p>column width is:' + convertToEm(convertToPixel(gutterSize, docSize, numOfCol)) + 'em</p><p>column width is (col, gutter): ' + convertToPercent(convertToPixel(gutterSize, docSize, numOfCol), docSize) + '%, ' + gutterPercent + '%</p>');
+							document.getElementById('comments').innerHTML=comment;
+							makeCssPixelGrid(convertToPercent(convertToPixel(gutterSize, docSize, numOfCol), docSize), numOfCol, gutterPercent, convertToPixel(gutterSize, docSize, numOfCol), gutterSize);
+							
+							return;
+						};
+					</script>
+	</head>
+
+	<body>
+		<div class="main">
+			<header class=" topmargin_pixel1 bottommargin_pixel1">
+				<h1 class="green "><strong></strong>CSSgridMaker9000(v1.0)</h1>
+			</header>
+			<nav>
+				<!--
+				<p>
+				<a href="/">Home</a>
+				</p>
+				<p>
+				<a href="/contact">Contact</a>
+				</p> -->
+			</nav>
+
+			<div>
+				<form name="myform" action="" method="GET">
+					<p>Enter numberof columns in the 1st box and gutter width, in pixels, in the 2nd box. The third input is for the main width (ex. 960)</p>
+					<br />
+					<input type="text" name="inputbox" value="" OnBlur="validate(this.form)">
+					<input type="text" name="inputbox2" value="" OnBlur="validateGutter(this.form)">
+						<input type="text" name="inputbox3" value="" OnBlur="validateContainer(this.form)">
+					<P>
+					<input type="button" name="button" Value="Click" onClick="numOfCol = getResults(this.form),gutterSize = getResultsGutter(this.form), docSize = getResultsContainer(this.form), putOut()">
+				</form>
+				<div id="comments">
+					
+				</div>
+				<div id="mycode">
+					
+				</div>
+			</div>
+
+			<footer>
+				<p>
+					&copy; Copyright 2012, Jonathan Hammond.
+				</p>
+			</footer>
+		</div>
+	</body>
+</html>
